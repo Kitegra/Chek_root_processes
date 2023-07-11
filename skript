@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Указываем файл, в котором хранится список хостов
+
+nods="nods"
+log_error="error_.log"
+
+# Итерируемся по каждой строке в файле hosts.txt
+while IFS= read -r host; do
+
+nooods[$i]=$host
+
+((i++))
+
+done <"$nods"
+
+errors_host=0;
+
+for  i in ${nooods[@]};
+do
+        ssh -q user@$i exit
+
+        if (($? == 0)); then
+
+                echo "chek host $i"
+                ssh user@$i ps -a -u root > logi_`date "+%d_%m_%Y"`/$i.log
+
+        else
+                ssh -q user@$i exit
+                echo "host $i kod  erors $?"  >> logi_`date "+%d_%m_%Y"`/$log_error
+                ((errors_host++))
+        fi
+done
+
+echo "failed to connect to $errors_host hosts"

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Указываем файл, в котором хранится список хостов
-
+login="укажите логин технической учётной безопастности" 
 nods="nods"
 log_error="error_.log"
 
@@ -18,15 +18,15 @@ errors_host=0;
 
 for  i in ${nooods[@]};
 do
-        ssh -q user@$i exit
+        ssh -q $login@$i exit
 
         if (($? == 0)); then
 
                 echo "chek host $i"
-                ssh user@$i ps -a -u root > logi_`date "+%d_%m_%Y"`/$i.log
+                ssh $login@$i ps -a -u root > logi_`date "+%d_%m_%Y"`/$i.log
 
         else
-                ssh -q user@$i exit
+                ssh -q $login@$i exit
                 echo "host $i kod  erors $?"  >> logi_`date "+%d_%m_%Y"`/$log_error
                 ((errors_host++))
         fi
